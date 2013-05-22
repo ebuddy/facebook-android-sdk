@@ -27,6 +27,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.net.http.SslError;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -114,7 +115,7 @@ public class WebDialog extends Dialog {
      * @param action     the portion of the dialog URL following "dialog/"
      * @param parameters parameters which will be included as part of the URL
      * @param theme      identifier of a theme to pass to the Dialog class
-     * @param listener the listener to notify, or null if no notification is desired
+     * @param listener   the listener to notify, or null if no notification is desired
      */
     public WebDialog(Context context, String action, Bundle parameters, int theme, OnCompleteListener listener) {
         super(context, theme);
@@ -257,7 +258,7 @@ public class WebDialog extends Dialog {
         crossImageView.setImageDrawable(crossDrawable);
         /* 'x' should not be visible while webview is loading
          * make it visible only after webview has fully loaded
-        */
+         */
         crossImageView.setVisibility(View.INVISIBLE);
     }
 
@@ -343,7 +344,7 @@ public class WebDialog extends Dialog {
 
         @Override
         public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-            if (DISABLE_SSL_CHECK_FOR_TESTING) {
+           if (DISABLE_SSL_CHECK_FOR_TESTING || Build.VERSION.SDK_INT < Build.VERSION_CODES.FROYO) {
                 handler.proceed();
             } else {
                 super.onReceivedSslError(view, handler, error);
@@ -490,11 +491,11 @@ public class WebDialog extends Dialog {
         /**
          * Constructor that builds a dialog for an authenticated user.
          *
-         * @param context the Context within which the dialog will be shown.
-         * @param session the Session representing an authenticating user to use for
-         *                showing the dialog; must not be null, and must be opened.
-         * @param action the portion of the dialog URL following www.facebook.com/dialog/.
-         *               See https://developers.facebook.com/docs/reference/dialogs/ for details.
+         * @param context    the Context within which the dialog will be shown.
+         * @param session    the Session representing an authenticating user to use for
+         *                   showing the dialog; must not be null, and must be opened.
+         * @param action     the portion of the dialog URL following www.facebook.com/dialog/.
+         *                   See https://developers.facebook.com/docs/reference/dialogs/ for details.
          * @param parameters a Bundle containing parameters to pass as part of the URL.
          */
         public Builder(Context context, Session session, String action, Bundle parameters) {
@@ -504,11 +505,11 @@ public class WebDialog extends Dialog {
         /**
          * Constructor that builds a dialog without an authenticated user.
          *
-         * @param context the Context within which the dialog will be shown.
+         * @param context       the Context within which the dialog will be shown.
          * @param applicationId the application ID to be included in the dialog URL.
-         * @param action the portion of the dialog URL following www.facebook.com/dialog/.
-         *               See https://developers.facebook.com/docs/reference/dialogs/ for details.
-         * @param parameters a Bundle containing parameters to pass as part of the URL.
+         * @param action        the portion of the dialog URL following www.facebook.com/dialog/.
+         *                      See https://developers.facebook.com/docs/reference/dialogs/ for details.
+         * @param parameters    a Bundle containing parameters to pass as part of the URL.
          */
         public Builder(Context context, String applicationId, String action, Bundle parameters) {
             super(context, applicationId, action, parameters);
