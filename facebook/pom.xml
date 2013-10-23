@@ -1,50 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project
-        xmlns="http://maven.apache.org/POM/4.0.0"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+<project 
+    xmlns="http://maven.apache.org/POM/4.0.0" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
                         http://maven.apache.org/maven-v4_0_0.xsd">
-
+         
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.ebuddy.sdk</groupId>
-    <artifactId>facebook-android-sdk</artifactId>
-    <version>3.5.0</version>
+    <groupId>com.github.avianey</groupId>
+    <artifactId>facebook-android-api</artifactId>
+    <version>3.5.2</version>
     <packaging>apklib</packaging>
-
-    <distributionManagement>
-        <repository>
-            <id>artifactory.releases</id>
-            <name>Artifactory Repository - Releases</name>
-            <url>http://svn.ebuddy.net/artifactory/libs-releases-local</url>
-            <layout>default</layout>
-        </repository>
-
-        <snapshotRepository>
-            <id>artifactory.snapshots</id>
-            <name>Artifactory Repository - Snapshots</name>
-            <url>http://svn.ebuddy.net/artifactory/libs-snapshots-local</url>
-            <layout>default</layout>
-            <uniqueVersion>false</uniqueVersion>
-        </snapshotRepository>
-    </distributionManagement>
 
     <properties>
         <platform.version>4.1.1.4</platform.version>
-        <sonar.host.url>http://sonar.ebuddy.net:9000</sonar.host.url>
-        <sonar.jdbc.url>jdbc:mysql://hope.ebuddy.net:3306/sonar?useUnicode=true&amp;characterEncoding=utf8
-        </sonar.jdbc.url>
-        <sonar.jdbc.driverClassName>com.mysql.jdbc.Driver</sonar.jdbc.driverClassName>
-        <sonar.jdbc.username>webmsn</sonar.jdbc.username>
-        <sonar.jdbc.password>3msn123</sonar.jdbc.password>
-        <sonar-maven-plugin.version>3.3</sonar-maven-plugin.version>
-        <sonar.profile>Android Lint</sonar.profile>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>android.compatibility</groupId>
-            <artifactId>android-support</artifactId>
-            <version>v4-r13</version>
+            <groupId>com.google.android</groupId>
+            <artifactId>support-v4</artifactId>
+            <version>r7</version>
         </dependency>
         <dependency>
             <groupId>com.google.android</groupId>
@@ -55,30 +30,29 @@
     </dependencies>
 
     <build>
-        <sourceDirectory>src</sourceDirectory>
         <plugins>
             <plugin>
                 <groupId>com.jayway.maven.plugins.android.generation2</groupId>
                 <artifactId>android-maven-plugin</artifactId>
-                <version>3.6.0</version>
+                <version>3.7.0</version>
                 <configuration>
+                    <androidManifestFile>${project.basedir}/AndroidManifest.xml</androidManifestFile>
+                    <assetsDirectory>${project.basedir}/assets</assetsDirectory>
+                    <resourceDirectory>${project.basedir}/res</resourceDirectory>
+                    <nativeLibrariesDirectory>${project.basedir}/src/main/native</nativeLibrariesDirectory>
                     <sdk>
-                        <platform>17</platform>
+                        <platform>18</platform>
                     </sdk>
-                    <undeployBeforeDeploy>true</undeployBeforeDeploy>
                 </configuration>
                 <extensions>true</extensions>
             </plugin>
 
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
+                <version>2.5.1</version>
                 <configuration>
-                    <fork>true</fork>
                     <source>1.6</source>
                     <target>1.6</target>
-                    <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
         </plugins>
